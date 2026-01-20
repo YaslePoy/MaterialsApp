@@ -40,7 +40,7 @@ namespace MaterialsApp.Migrations
                 {
                     Name = table.Column<string>(type: "text", nullable: false),
                     Address = table.Column<string>(type: "text", nullable: false),
-                    City = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    SupplyTime = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace MaterialsApp.Migrations
                     Password = table.Column<string>(type: "text", nullable: false),
                     Role = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Image = table.Column<byte[]>(type: "bytea", nullable: false)
+                    Image = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,7 +142,7 @@ namespace MaterialsApp.Migrations
                     Unit = table.Column<string>(type: "text", nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false),
                     SupplierId = table.Column<string>(type: "text", nullable: false),
-                    Image = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Image = table.Column<byte[]>(type: "bytea", nullable: true),
                     ProductType = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
                     Weight = table.Column<double>(type: "double precision", nullable: false)
@@ -167,10 +167,10 @@ namespace MaterialsApp.Migrations
                     Unit = table.Column<string>(type: "text", nullable: false),
                     Count = table.Column<int>(type: "integer", nullable: false),
                     SupplierId = table.Column<string>(type: "text", nullable: false),
-                    Image = table.Column<byte[]>(type: "bytea", nullable: false),
+                    Image = table.Column<byte[]>(type: "bytea", nullable: true),
                     ProductType = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    GOST = table.Column<string>(type: "text", nullable: false),
+                    GOST = table.Column<string>(type: "text", nullable: true),
                     Length = table.Column<double>(type: "double precision", nullable: false),
                     Characteristics = table.Column<double>(type: "double precision", nullable: false)
                 },

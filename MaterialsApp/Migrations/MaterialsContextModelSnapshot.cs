@@ -34,7 +34,6 @@ namespace MaterialsApp.Migrations
                         .HasColumnType("integer");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Name")
@@ -144,11 +143,9 @@ namespace MaterialsApp.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("GOST")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<double>("Length")
@@ -291,8 +288,9 @@ namespace MaterialsApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("City")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("SupplyTime")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Name");
 
@@ -305,7 +303,6 @@ namespace MaterialsApp.Migrations
                         .HasColumnType("text");
 
                     b.Property<byte[]>("Image")
-                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("Name")
