@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.DirectorView"
+             x:DataType="viewModels:DirectorViewModel">
+    <Grid RowDefinitions="200 * 100" Margin="10">
+        <StackPanel>
+            <HyperlinkButton Command="{Binding Exit}">Выйти</HyperlinkButton>
+            <TextBlock FontSize="24" FontWeight="Bold">Экран директора</TextBlock>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="Фамилия" Binding="{Binding Surname}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Возраст" Binding="{Binding Age}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding OperationsList}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Spacing="10" Orientation="Horizontal" Grid.Row="2">
+            <Button Command="{Binding Delete}">Удалить</Button>
+            <Button Command="{Binding Create}">Создать</Button>
+            <Button Command="{Binding Edit}">Изменить</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

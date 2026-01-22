@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using MaterialsApp.ViewModels;
+using ReactiveUI;
 
 namespace MaterialsApp;
 
@@ -33,5 +34,13 @@ public class ViewLocator : IDataTemplate
     public bool Match(object? data)
     {
         return data is ViewModelBase;
+    }
+}
+
+public class ViewLocatorVM : IViewLocator
+{
+    public IViewFor? ResolveView<T>(T? viewModel, string? contract = null)
+    {
+        return new ViewLocator().Build(viewModel) as IViewFor;
     }
 }

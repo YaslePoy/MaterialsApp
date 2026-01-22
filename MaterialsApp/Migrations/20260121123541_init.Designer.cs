@@ -3,6 +3,7 @@ using System;
 using MaterialsApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MaterialsApp.Migrations
 {
     [DbContext(typeof(MaterialsContext))]
-    partial class MaterialsContextModelSnapshot : ModelSnapshot
+    [Migration("20260121123541_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +60,6 @@ namespace MaterialsApp.Migrations
                     b.Property<string>("Article")
                         .HasColumnType("text");
 
-                    b.Property<int>("AccessoryTypeId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Count")
                         .HasColumnType("integer");
 
@@ -73,6 +73,10 @@ namespace MaterialsApp.Migrations
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric");
 
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("SupplierId")
                         .HasColumnType("integer");
 
@@ -84,28 +88,9 @@ namespace MaterialsApp.Migrations
 
                     b.HasKey("Article");
 
-                    b.HasIndex("AccessoryTypeId");
-
                     b.HasIndex(new[] { "SupplierId" }, "IX_Accessories_SupplierId");
 
                     b.ToTable("Accessories");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.AccessoryType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccessoryTypes");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.AssemblySpec", b =>
@@ -132,69 +117,6 @@ namespace MaterialsApp.Migrations
                     b.HasIndex(new[] { "ItemId" }, "IX_AssemblySpecs_ItemId");
 
                     b.ToTable("AssemblySpecs");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.Employee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateOnly>("BirthDate")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Education")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Patronymic")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Qualifications")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Employees");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.EmployeeOperation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("OperationId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("OperationId");
-
-                    b.ToTable("EmployeeOperations");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.Equipment", b =>
@@ -251,15 +173,16 @@ namespace MaterialsApp.Migrations
                     b.Property<double?>("MassPerMeter")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("MaterialTypeId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal?>("Price")
                         .HasColumnType("numeric");
+
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("integer");
@@ -269,8 +192,6 @@ namespace MaterialsApp.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Article");
-
-                    b.HasIndex("MaterialTypeId");
 
                     b.HasIndex(new[] { "SupplierId" }, "IX_Materials_SupplierId");
 
@@ -302,23 +223,6 @@ namespace MaterialsApp.Migrations
                     b.HasIndex(new[] { "MaterialId" }, "IX_MaterialSpecs_MaterialId");
 
                     b.ToTable("MaterialSpecs");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.MaterialType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MaterialTypes");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.OperationSpec", b =>
@@ -490,6 +394,7 @@ namespace MaterialsApp.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Patronymic")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("RoleId")
@@ -527,19 +432,11 @@ namespace MaterialsApp.Migrations
 
             modelBuilder.Entity("MaterialsApp.Models.Accessory", b =>
                 {
-                    b.HasOne("MaterialsApp.Models.AccessoryType", "AccessoryType")
-                        .WithMany()
-                        .HasForeignKey("AccessoryTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MaterialsApp.Models.Supplier", "Supplier")
                         .WithMany("Accessories")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AccessoryType");
 
                     b.Navigation("Supplier");
                 });
@@ -563,25 +460,6 @@ namespace MaterialsApp.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MaterialsApp.Models.EmployeeOperation", b =>
-                {
-                    b.HasOne("MaterialsApp.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MaterialsApp.Models.OperationSpec", "Operation")
-                        .WithMany()
-                        .HasForeignKey("OperationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Operation");
-                });
-
             modelBuilder.Entity("MaterialsApp.Models.Equipment", b =>
                 {
                     b.HasOne("MaterialsApp.Models.EquipmentType", "EquipmentTypeNavigation")
@@ -595,19 +473,11 @@ namespace MaterialsApp.Migrations
 
             modelBuilder.Entity("MaterialsApp.Models.Material", b =>
                 {
-                    b.HasOne("MaterialsApp.Models.MaterialType", "MaterialType")
-                        .WithMany()
-                        .HasForeignKey("MaterialTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MaterialsApp.Models.Supplier", "Supplier")
                         .WithMany("Materials")
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("MaterialType");
 
                     b.Navigation("Supplier");
                 });

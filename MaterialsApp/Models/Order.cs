@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MaterialsApp.Models;
 
 public partial class Order
 {
+    [Key]
+    public int Id { get; set; }
     public int Number { get; set; }
 
     public DateOnly Date { get; set; }
 
     public string Name { get; set; } = null!;
 
-    public string ProductId { get; set; } = null!;
+    public int ProductId { get; set; }
 
-    public string CustomerId { get; set; } = null!;
+    public int CustomerId { get; set; }
 
-    public string ManagerId { get; set; } = null!;
+    public int ManagerId { get; set; }
 
     public decimal Cost { get; set; }
 

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MaterialsApp.Models;
 
 public partial class OperationSpec
 {
-    public string ProductId { get; set; } = null!;
+    [Key]
+    public int Id { get; set; }
+    public int ProductId { get; set; }
 
     public string Operation { get; set; } = null!;
 

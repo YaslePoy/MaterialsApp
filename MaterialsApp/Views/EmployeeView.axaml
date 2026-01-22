@@ -1,0 +1,40 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             xmlns:models="clr-namespace:MaterialsApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.EmployeeView"
+             x:DataType="viewModels:EmployeeViewModel">
+    <ScrollViewer Margin="10">
+        <StackPanel Spacing="10">
+            <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+            <TextBox Watermark="Имя" Text="{Binding Inner.Name}"></TextBox>
+            <TextBox Watermark="Фамилия" Text="{Binding Inner.Surname}"></TextBox>
+            <TextBox Watermark="Отчество" Text="{Binding Inner.Patronymic}"></TextBox>
+            <TextBox Watermark="Квалификация" Text="{Binding Inner.Qualifications}"></TextBox>
+            <TextBox Watermark="Образование" Text="{Binding Inner.Education}"></TextBox>
+            <TextBox Watermark="Адрес" Text="{Binding Inner.Address}"></TextBox>
+            <TextBlock>Дата рождения</TextBlock>
+            <DatePicker SelectedDate="{Binding BirthDate}"></DatePicker>
+            <StackPanel Spacing="20" Width="400" IsEnabled="{Binding HasId}">
+                <StackPanel Orientation="Horizontal" Spacing="10">
+                    <ComboBox SelectedValue="{Binding SelectedOperation}" ItemsSource="{Binding Operations}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="models:OperationSpec"><TextBlock Text="{Binding Operation}"></TextBlock></DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Command="{Binding AddOperation}">+</Button>
+                    <Button Command="{Binding RemoveOperation}">-</Button>
+                </StackPanel>
+                <ComboBox SelectedValue="{Binding SelectedAddedOperation}" ItemsSource="{Binding Inner.Operations}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate DataType="models:EmployeeOperation"><TextBlock Text="{Binding Operation.Operation}"></TextBlock></DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <Button Command="{Binding SaveCommand}">Сохранить</Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

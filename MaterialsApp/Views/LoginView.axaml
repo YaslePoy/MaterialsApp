@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.LoginView"
+             x:DataType="viewModels:LoginViewModel">
+    <Grid ColumnDefinitions="* 400 *">
+        <StackPanel Grid.Column="1" Spacing="10" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+            <TextBlock>Авторизация</TextBlock>
+            <TextBox Watermark="Логин" Text="{Binding Login}"></TextBox>
+            <TextBox Watermark="Пароль" Text="{Binding Password}" PasswordChar="+"></TextBox>
+            <Button HorizontalAlignment="Stretch" Command="{Binding LoginCommand}">Войти</Button>
+            <CheckBox IsChecked="{Binding Remember}">Запонить меня</CheckBox>
+            <HyperlinkButton Command="{Binding RegisterCommand}">Зарегистироваться</HyperlinkButton>
+        </StackPanel>
+    </Grid>
+</UserControl>

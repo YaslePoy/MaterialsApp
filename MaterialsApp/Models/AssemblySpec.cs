@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MaterialsApp.Models;
 
 public partial class AssemblySpec
 {
-    public string ProductId { get; set; } = null!;
+    [Key]
+    public int Id { get; set; }
+    public int ProductId { get; set; } 
 
-    public string ItemId { get; set; } = null!;
+    public int ItemId { get; set; }
 
     public int Count { get; set; }
 

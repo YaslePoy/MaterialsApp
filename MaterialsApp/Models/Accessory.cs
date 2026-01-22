@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaterialsApp.Models;
 
@@ -13,11 +15,12 @@ public partial class Accessory
 
     public int Count { get; set; }
 
-    public string SupplierId { get; set; } = null!;
+    public int SupplierId { get; set; }
 
     public byte[]? Image { get; set; }
 
-    public string ProductType { get; set; } = null!;
+    [ForeignKey(nameof(AccessoryType))]
+    public int AccessoryTypeId { get; set; }
 
     public decimal? Price { get; set; }
 
@@ -26,4 +29,12 @@ public partial class Accessory
     public virtual ICollection<AccessoriesSpec> AccessoriesSpecs { get; set; } = new List<AccessoriesSpec>();
 
     public virtual Supplier Supplier { get; set; } = null!;
+    public virtual AccessoryType AccessoryType { get; set; } = null!;
+}
+
+public class AccessoryType
+{
+    [Key]
+    public int Id { get; set; }
+    public string Name { get; set; }
 }
