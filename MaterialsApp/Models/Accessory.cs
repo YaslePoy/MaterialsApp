@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,11 +26,14 @@ public partial class Accessory
     public decimal? Price { get; set; }
 
     public double? Weight { get; set; }
-
-    public virtual ICollection<AccessoriesSpec> AccessoriesSpecs { get; set; } = new List<AccessoriesSpec>();
+    [ForeignKey(nameof(Models.Warehouse))]
+    public int? WarehouseId { get; set; }
+    public virtual ICollection<AccessoriesSpec> AccessoriesSpecs { get; set; } = new ObservableCollection<AccessoriesSpec>();
 
     public virtual Supplier Supplier { get; set; } = null!;
     public virtual AccessoryType AccessoryType { get; set; } = null!;
+    public virtual Warehouse? Warehouse { get; set; } = null!;
+    
 }
 
 public class AccessoryType

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,7 +23,7 @@ public partial class User
 
     public byte[]? Image { get; set; }
 
-    public virtual ICollection<Order> OrderCustomers { get; set; } = new List<Order>();
+    public virtual ICollection<Order> OrderCustomers { get; set; } = new ObservableCollection<Order>();
 
-    public virtual ICollection<Order> OrderManagers { get; set; } = new List<Order>();
+    public virtual ICollection<Order> OrderManagers { get; set; } = new ObservableCollection<Order>();
 }

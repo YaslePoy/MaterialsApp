@@ -10,6 +10,11 @@
         <StackPanel>
             <HyperlinkButton Command="{Binding Exit}">Выйти</HyperlinkButton>
             <TextBlock FontSize="24" FontWeight="Bold">Экран директора</TextBlock>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="50" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Spacing="10">
+                    <HyperlinkButton Command="{Binding ToItemsCommand}">Материалы и комплектующие</HyperlinkButton>
+                </StackPanel>
+            </ScrollViewer>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
             <DataGrid.Columns>

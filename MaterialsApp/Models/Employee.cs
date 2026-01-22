@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -18,7 +19,7 @@ public class Employee
     public string Qualifications { get; set; }
     [NotMapped] public int Age => (DateTime.Today - BirthDate.ToDateTime(default)).Days / 365;
     
-    public virtual ICollection<EmployeeOperation> Operations { get; set; } = new List<EmployeeOperation>();
+    public virtual ICollection<EmployeeOperation> Operations { get; set; } = new ObservableCollection<EmployeeOperation>();
     [NotMapped] public string OperationsList => string.Join(", ", Operations.Select(i => i.Operation.Operation));
 }
 

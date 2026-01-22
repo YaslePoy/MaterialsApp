@@ -81,9 +81,7 @@ public class EmployeeViewModel : ViewModelBase, IRoutableViewModel
 
             App.Db.EmployeeOperations.Remove(SelectedAddedOperation);
             await App.Db.SaveChangesAsync();
-
-            this.RaisePropertyChanging("Operations");
-            this.RaisePropertyChanged("Operations");
+            
         }
     );
 
@@ -98,8 +96,6 @@ public class EmployeeViewModel : ViewModelBase, IRoutableViewModel
         App.Db.EmployeeOperations.Add(operation);
         await App.Db.SaveChangesAsync();
 
-        this.RaisePropertyChanging("Operations");
-        this.RaisePropertyChanged("Operations");
     });
 
     public bool HasId => Inner.Id != 0;

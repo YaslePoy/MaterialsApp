@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.AccessoryView"
+             x:DataType="viewModels:AccessoryViewModel">
+    <DockPanel Margin="10" LastChildFill="True">
+        <HyperlinkButton Margin="10" DockPanel.Dock="Top" Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+        <ScrollViewer Margin="10">
+            <StackPanel Spacing="10">
+                <TextBox IsReadOnly="True" Name="Артикул" Text="{Binding Inner.Article}"></TextBox>
+                <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Название" Text="{Binding Inner.Name}"></TextBox>
+                <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Цена" Text="{Binding Inner.Price}"></TextBox>
+                <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Еденица измерения" Text="{Binding Inner.Unit}"></TextBox>
+                <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Количество на складе" Text="{Binding Inner.Count}"></TextBox>
+                <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Types}"></ComboBox>
+                <ComboBox IsEditable="{Binding ReadOnly}" ItemsSource="{Binding Warehouses}"
+                          SelectedItem="{Binding Inner.Warehouse}">
+                </ComboBox>
+                <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Suppliers}"
+                          SelectedItem="{Binding Inner.Supplier}">
+                </ComboBox>
+                <Button Command="{Binding SaveCommand}">Сохранить</Button>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel></UserControl>

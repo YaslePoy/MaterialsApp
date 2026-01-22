@@ -42,10 +42,11 @@ public partial class MaterialsContext : DbContext
     public virtual DbSet<AccessoryType> AccessoryTypes { get; set; }
     public virtual DbSet<Employee> Employees { get; set; }
     public virtual DbSet<EmployeeOperation> EmployeeOperations { get; set; }
+    public virtual DbSet<Warehouse> Warehouses { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseLazyLoadingProxies().UseNpgsql("Server=localhost;port=5432;Database=materials_db;User Id=micial;Password=1234");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Server=localhost;port=5432;Database=materials_db;User Id=micial;Password=1234").UseLazyLoadingProxies();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -82,13 +83,11 @@ public partial class MaterialsContext : DbContext
 
             entity.HasIndex(e => e.EquipmentType, "IX_Equipments_EquipmentType");
 
-            entity.HasOne(d => d.EquipmentTypeNavigation).WithMany(p => p.Equipment).HasForeignKey(d => d.EquipmentType);
+            entity.HasOne(d => d.EquipmentTypeNavigation).WithMany(p => p.Equipment)
+                .HasForeignKey(d => d.EquipmentType);
         });
 
-        modelBuilder.Entity<EquipmentType>(entity =>
-        {
-            entity.HasKey(e => e.Name);
-        });
+        modelBuilder.Entity<EquipmentType>(entity => { entity.HasKey(e => e.Name); });
 
         modelBuilder.Entity<Material>(entity =>
         {
@@ -103,7 +102,6 @@ public partial class MaterialsContext : DbContext
 
         modelBuilder.Entity<MaterialSpec>(entity =>
         {
-
             entity.HasIndex(e => e.MaterialId, "IX_MaterialSpecs_MaterialId");
 
             entity.HasOne(d => d.Material).WithMany(p => p.MaterialSpecs).HasForeignKey(d => d.MaterialId);
@@ -115,7 +113,8 @@ public partial class MaterialsContext : DbContext
         {
             entity.HasIndex(e => e.EquipmentType, "IX_OperationSpecs_EquipmentType");
 
-            entity.HasOne(d => d.EquipmentTypeNavigation).WithMany(p => p.OperationSpecs).HasForeignKey(d => d.EquipmentType);
+            entity.HasOne(d => d.EquipmentTypeNavigation).WithMany(p => p.OperationSpecs)
+                .HasForeignKey(d => d.EquipmentType);
 
             entity.HasOne(d => d.Product).WithMany(p => p.OperationSpecs).HasForeignKey(d => d.ProductId);
         });
@@ -139,7 +138,7 @@ public partial class MaterialsContext : DbContext
         {
             entity.HasOne(d => d.Employee).WithMany(p => p.Operations).HasForeignKey(d => d.EmployeeId);
         });
-        
+
         OnModelCreatingPartial(modelBuilder);
     }
 

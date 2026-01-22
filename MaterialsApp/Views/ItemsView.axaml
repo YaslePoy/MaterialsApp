@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             xmlns:models="clr-namespace:MaterialsApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.ItemsView"
+             x:DataType="viewModels:ItemsViewModel">
+    <DockPanel Margin="10" LastChildFill="True">
+        <HyperlinkButton DockPanel.Dock="Top" Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+        <TabControl DockPanel.Dock="Bottom">
+            <TabItem Header="Материалы">
+                <Grid RowDefinitions="100 * 100">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                    <ComboBox ItemsSource="{Binding Warehouses}" SelectedItem="{Binding SelectedWarehouse}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate DataType="models:Warehouse"><TextBlock Text="{Binding Name}"></TextBlock></DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                        <Button VerticalAlignment="Top" Command="{Binding ClearFilter}">Очистить фильтр</Button>
+                    </StackPanel>
+                    <DataGrid Grid.Row="1" SelectionMode="Single" SelectedItem="{Binding SelectedMaterial}" ItemsSource="{Binding FilteredMaterials}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Артикул" Binding="{Binding Article}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Наименование" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Количество" Binding="{Binding Count}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Ед. изм." Binding="{Binding Unit}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Цена" Binding="{Binding Price}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Поставщик" Binding="{Binding Supplier.Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Время поставки" Binding="{Binding Supplier.SupplyTime}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <StackPanel Grid.Row="2">
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <TextBlock Text="{Binding FilteredMaterials.Count, StringFormat={}Отфильтрованных: {0}}"></TextBlock>
+                            <TextBlock Text="{Binding Materials.Count, StringFormat={}Всего: {0}}"></TextBlock>
+                            <TextBlock Text="{Binding TotalMaterialsPrice, StringFormat={}Суммарная стоимость: {0}}"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</UserControl>

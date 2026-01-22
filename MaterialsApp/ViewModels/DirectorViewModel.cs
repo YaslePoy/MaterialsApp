@@ -58,4 +58,6 @@ public class DirectorViewModel : ViewModelBase, IRoutableViewModel
             Employees.Remove(SelectedEmployee);
         }
     );
+
+    public ICommand ToItemsCommand => ReactiveCommand.Create(()=> { HostScreen.Router.Navigate.Execute(new ItemsViewModel(HostScreen)); });
 }
