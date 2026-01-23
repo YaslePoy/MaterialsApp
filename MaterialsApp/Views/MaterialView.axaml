@@ -21,15 +21,12 @@
                 </TextBox>
                 <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Types}"
                           SelectedValue="{Binding Inner.MaterialType}"></ComboBox>
-                <TextBlock Text="{Binding Inner.MaterialType.Name}"></TextBlock>
                 <ComboBox IsEditable="{Binding ReadOnly}" ItemsSource="{Binding Warehouses}"
                           SelectedValue="{Binding Inner.Warehouse}">
                 </ComboBox>
-                <TextBlock Text="{Binding Inner.Warehouse.Name}"></TextBlock>
                 <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Suppliers}"
                           SelectedValue="{Binding Inner.Supplier}">
                 </ComboBox>
-                <TextBlock Text="{Binding Inner.Supplier.Name}"></TextBlock>
                 <Button Command="{Binding SaveCommand}">Сохранить</Button>
             </StackPanel>
         </ScrollViewer>

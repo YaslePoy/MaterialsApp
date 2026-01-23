@@ -15,7 +15,9 @@
                 <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Цена" Text="{Binding Inner.Price}"></TextBox>
                 <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Еденица измерения" Text="{Binding Inner.Unit}"></TextBox>
                 <TextBox IsReadOnly="{Binding ReadOnly}" Watermark="Количество на складе" Text="{Binding Inner.Count}"></TextBox>
-                <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Types}"></ComboBox>
+                <ComboBox IsEditable="{Binding Editable}" ItemsSource="{Binding Types}"
+                          SelectedItem="{Binding Inner.AccessoryType}">
+                </ComboBox>
                 <ComboBox IsEditable="{Binding ReadOnly}" ItemsSource="{Binding Warehouses}"
                           SelectedItem="{Binding Inner.Warehouse}">
                 </ComboBox>
@@ -25,4 +27,5 @@
                 <Button Command="{Binding SaveCommand}">Сохранить</Button>
             </StackPanel>
         </ScrollViewer>
-    </DockPanel></UserControl>
+    </DockPanel>
+</UserControl>

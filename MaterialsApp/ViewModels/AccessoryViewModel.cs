@@ -12,11 +12,12 @@ namespace MaterialsApp.ViewModels;
 
 public class AccessoryViewModel : ViewModelBase, IRoutableViewModel
 {
+    private MaterialsContext _db;
     public AccessoryViewModel(IScreen hostScreen, Accessory material)
     {
         HostScreen = hostScreen;
-        Inner = material;
-        _ = LoadAsync();
+        _db = new MaterialsContext();
+        _ = LoadAsync(material);
     }
 
     public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
@@ -27,27 +28,29 @@ public class AccessoryViewModel : ViewModelBase, IRoutableViewModel
     public ObservableCollection<Warehouse> Warehouses { get; set; } = [];
     public ObservableCollection<Supplier> Suppliers { get; set; } = [];
 
-    public async Task LoadAsync()
+    public async Task LoadAsync(Accessory material)
     {
-        Warehouses.AddRange(await App.Db.Warehouses.ToListAsync());
-        Suppliers.AddRange(await App.Db.Suppliers.ToListAsync());
-        Types.AddRange(await App.Db.AccessoryTypes.ToListAsync());
+        Inner = await _db.Accessories.FirstAsync(i => i.Article == material.Article);
+        Warehouses.AddRange(await _db.Warehouses.ToListAsync());
+        Suppliers.AddRange(await _db.Suppliers.ToListAsync());
+        Types.AddRange(await _db.AccessoryTypes.ToListAsync());
+        this.RaisePropertyChanged(nameof(Inner));
     }
 
     public ICommand SaveCommand => ReactiveCommand.CreateFromTask(async () =>
     {
         if (string.IsNullOrWhiteSpace(Inner.Article))
         {
-            App.Db.Accessories.Add(Inner);
+            _db.Accessories.Add(Inner);
         }
         else
         {
-            App.Db.Accessories.Update(Inner);
+            _db.Accessories.Update(Inner);
         }
 
         try
         {
-            await App.Db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             HostScreen.Router.Navigate.Execute(new ItemsViewModel(HostScreen));
         }
         catch

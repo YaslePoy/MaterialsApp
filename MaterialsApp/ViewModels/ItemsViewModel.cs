@@ -13,12 +13,17 @@ namespace MaterialsApp.ViewModels;
 
 public class ItemsViewModel : ViewModelBase, IRoutableViewModel
 {
+    private MaterialsContext _db;
+    private bool _reloadFlag;
+    private bool _ignoreNavigation;
     private Warehouse? _selectedWarehouse = null;
-    private Material _selectedMaterial;
+    private Material? _selectedMaterial;
+    private Accessory? _selectedAccessory;
 
     public ItemsViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
+        _db = new MaterialsContext();
         _ = LoadAsync();
     }
 
@@ -56,24 +61,73 @@ public class ItemsViewModel : ViewModelBase, IRoutableViewModel
     public ObservableCollection<Material> FilteredMaterials { get; set; } = [];
     public ObservableCollection<Accessory> FilteredAccessories { get; set; } = [];
     public decimal TotalMaterialsPrice => FilteredMaterials.Sum(i => i.Price ?? 0 * i.Count);
+    public decimal TotalAccessoriesPrice => FilteredAccessories.Sum(i => i.Price ?? 0 * i.Count);
 
     public async Task LoadAsync()
     {
-        Materials.AddRange(await App.Db.Materials.ToListAsync());
-        Accessories.AddRange(await App.Db.Accessories.ToListAsync());
-        Warehouses.AddRange(await App.Db.Warehouses.ToListAsync());
+        Materials.AddRange(await _db.Materials.ToListAsync());
+        Accessories.AddRange(await _db.Accessories.ToListAsync());
+        Warehouses.AddRange(await _db.Warehouses.ToListAsync());
         FilteredMaterials.AddRange(Materials);
         FilteredAccessories.AddRange(Accessories);
         this.RaisePropertyChanged(nameof(TotalMaterialsPrice));
+    }
+
+    public async Task ReloadAsync()
+    {
+        if (!_reloadFlag)
+        {
+            _reloadFlag = true;
+            return;
+        }
+
+        await _db.DisposeAsync();
+        _db = new MaterialsContext();
+        
+        _ignoreNavigation = true;
+        SelectedMaterial = null;
+        SelectedAccessory = null;
+
+        Materials.Clear();
+        Accessories.Clear();
+        FilteredMaterials.Clear();
+        FilteredAccessories.Clear();
+
+        Materials.AddRange(await _db.Materials.ToListAsync());
+        Accessories.AddRange(await _db.Accessories.ToListAsync());
+        FilteredMaterials.AddRange(Materials);
+        FilteredAccessories.AddRange(Accessories);
+        this.RaisePropertyChanged(nameof(TotalMaterialsPrice));
+        this.RaisePropertyChanged(nameof(TotalAccessoriesPrice));
+
+        this.RaisePropertyChanged(nameof(SelectedMaterial));
+        this.RaisePropertyChanged(nameof(SelectedAccessory));
+        _ignoreNavigation = false;
     }
 
     public ICommand NavigateBackCommand => ReactiveCommand.Create(HostScreen.Router.NavigateBack.Execute);
 
     public ICommand ClearFilter => ReactiveCommand.Create(() => { SelectedWarehouse = null; });
 
-    public Material SelectedMaterial
+    public Material? SelectedMaterial
     {
         get => _selectedMaterial;
-        set => HostScreen.Router.Navigate.Execute(new MaterialViewModel(HostScreen, value));
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedMaterial, value);
+            if (!_ignoreNavigation && value is not null)
+                HostScreen.Router.Navigate.Execute(new MaterialViewModel(HostScreen, value));
+        }
+    }
+
+    public Accessory? SelectedAccessory
+    {
+        get => _selectedAccessory;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _selectedAccessory, value);
+            if (!_ignoreNavigation && value is not null)
+                HostScreen.Router.Navigate.Execute(new AccessoryViewModel(HostScreen, value));
+        }
     }
 }

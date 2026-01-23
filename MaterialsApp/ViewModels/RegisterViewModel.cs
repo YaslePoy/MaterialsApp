@@ -69,7 +69,7 @@ public class RegisterViewModel : ViewModelBase, IRoutableViewModel
     }
     
     private IObservable<bool> CanRegister => this.WhenAnyValue(i => i.Password, l => l.Login, i => i.Name,
-        (String p, string l, string n) => !string.IsNullOrWhiteSpace(n) && !string.IsNullOrWhiteSpace(l) && p.Length is >= 4 and <= 16 && p.Any(char.IsDigit) && p.Any(char.IsUpper) && p.Any(char.IsLower));
+        (p, l, n) => !string.IsNullOrWhiteSpace(n) && !string.IsNullOrWhiteSpace(l) && p.Length is >= 4 and <= 16 && p.Any(char.IsDigit) && p.Any(char.IsUpper) && p.Any(char.IsLower) && p.All(c => !"*&{}|+".Contains(c)));
 
     public ICommand Back => ReactiveCommand.Create(() =>
     {

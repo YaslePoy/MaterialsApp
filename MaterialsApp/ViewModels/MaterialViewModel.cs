@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
@@ -12,11 +13,12 @@ namespace MaterialsApp.ViewModels;
 
 public class MaterialViewModel : ViewModelBase, IRoutableViewModel
 {
+    private MaterialsContext _db;
     public MaterialViewModel(IScreen hostScreen, Material material)
     {
         HostScreen = hostScreen;
-        Inner = material;
-        _ = LoadAsync();
+        _db = new MaterialsContext();
+        _ = LoadAsync(material);
     }
 
     public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
@@ -27,28 +29,30 @@ public class MaterialViewModel : ViewModelBase, IRoutableViewModel
     public ObservableCollection<Warehouse> Warehouses { get; set; } = [];
     public ObservableCollection<Supplier> Suppliers { get; set; } = [];
 
-    public async Task LoadAsync()
+    public async Task LoadAsync(Material material)
     {
-        Warehouses.AddRange(await App.Db.Warehouses.ToListAsync());
-        Suppliers.AddRange(await App.Db.Suppliers.ToListAsync());
-        Types.AddRange(await App.Db.MaterialTypes.ToListAsync());
+        Inner = await _db.Materials.FirstAsync(i => i.Article == material.Article);
+        Warehouses.AddRange(await _db.Warehouses.ToListAsync());
+        Suppliers.AddRange(await _db.Suppliers.ToListAsync());
+        Types.AddRange(await _db.MaterialTypes.ToListAsync());
+        this.RaisePropertyChanged(nameof(Inner));
     }
-
+    
     public ICommand SaveCommand => ReactiveCommand.CreateFromTask(async () =>
     {
         if (string.IsNullOrWhiteSpace(Inner.Article))
         {
-            App.Db.Materials.Add(Inner);
+            _db.Materials.Add(Inner);
         }
         else
         {
-            App.Db.Materials.Update(Inner);
+            _db.Materials.Update(Inner);
         }
 
         try
         {
-            await App.Db.SaveChangesAsync();
-            HostScreen.Router.Navigate.Execute(new ItemsViewModel(HostScreen));
+            await _db.SaveChangesAsync();
+            HostScreen.Router.NavigateBack.Execute();
         }
         catch
         {
