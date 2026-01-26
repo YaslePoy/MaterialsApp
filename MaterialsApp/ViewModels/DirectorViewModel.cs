@@ -60,4 +60,5 @@ public class DirectorViewModel : ViewModelBase, IRoutableViewModel
     );
 
     public ICommand ToItemsCommand => ReactiveCommand.Create(()=> { HostScreen.Router.Navigate.Execute(new ItemsViewModel(HostScreen)); });
+    public ICommand ToWorkshopsCommand => ReactiveCommand.Create(()=> { HostScreen.Router.Navigate.Execute(new WorkshopViewModel(HostScreen)); });
 }

@@ -9,7 +9,9 @@
         x:Class="MaterialsApp.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="MaterialsApp">
+        Title="MaterialsApp"
+        MinHeight="900"
+        MinWidth="900">
         <rui:RoutedViewHost Router="{Binding Router}">
                 <rui:RoutedViewHost.ViewLocator><root:ViewLocatorVM></root:ViewLocatorVM></rui:RoutedViewHost.ViewLocator>
         </rui:RoutedViewHost>

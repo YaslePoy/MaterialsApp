@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             xmlns:models="clr-namespace:MaterialsApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.WorkshopView"
+             x:DataType="viewModels:WorkshopViewModel">
+    <Grid Margin="10" RowDefinitions="50 * 50">
+        <ComboBox SelectionChanged="UpdateWorkshopView" SelectedItem="{Binding SelectedWorkshop}" ItemsSource="{Binding Workshops}" Name="WorkshopSelector"></ComboBox>
+        <Grid Grid.Row="1" ColumnDefinitions="100 *">
+            <ScrollViewer>
+                <StackPanel Spacing="10">
+                    <Button Click="RemoveSelect" HorizontalAlignment="Stretch" Background="OrangeRed">Удаление</Button>
+                    <Image Source="../Assets/Equipment.png" PointerPressed="HandlePlacementSelect" Tag="Equipment.png"
+                           HorizontalAlignment="Stretch" Stretch="UniformToFill">
+                    </Image>
+                    <Image Source="../Assets/Exit.jpg" HorizontalAlignment="Stretch"
+                           PointerPressed="HandlePlacementSelect" Stretch="UniformToFill"
+                           Tag="Exit.jpg">
+                    </Image>
+                    <Image Source="../Assets/FireExtinguisher.png" HorizontalAlignment="Stretch"
+                           PointerPressed="HandlePlacementSelect"
+                           Stretch="UniformToFill" Tag="FireExtinguisher.png">
+                    </Image>
+                    <Image Source="../Assets/FirstAid.png" HorizontalAlignment="Stretch" Stretch="UniformToFill"
+                           PointerPressed="HandlePlacementSelect"
+                           Tag="FirstAid.png">
+                    </Image>
+                </StackPanel>
+            </ScrollViewer>
+            <Canvas Width="700" Height="700" Grid.Column="1" Name="WorkshopCanvas" PointerReleased="PlaceCurrent">
+                <Image Width="700" Height="700" Margin="10"
+                       Stretch="Uniform" HorizontalAlignment="Stretch"
+                       Source="{Binding #WorkshopSelector.((models:Workshop)SelectedItem).UrlPathSegmentValue}">
+                </Image>
+            </Canvas>
+        </Grid>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Command="{Binding SaveCommand}">Сохранить</Button>
+            <HyperlinkButton Command="{Binding BackCommand}">Назад</HyperlinkButton>
+        </StackPanel>
+    </Grid>
+</UserControl>
