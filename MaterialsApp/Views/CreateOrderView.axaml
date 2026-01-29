@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.CreateOrderView"
+             x:DataType="viewModels:CreateOrderViewModel">
+    <ScrollViewer Margin="10">
+        <StackPanel Spacing="10" MaxWidth="600">
+            <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+            <TextBox IsReadOnly="True" Text="{Binding Number}"></TextBox>
+            <TextBox Watermark="Название" Text="{Binding Order.Name}"></TextBox>
+            <ComboBox PlaceholderText="Заказчик" ItemsSource="{Binding Customers}" SelectedItem="{Binding Customer}"></ComboBox>
+            <ComboBox PlaceholderText="Изделие" ItemsSource="{Binding Products}" SelectedItem="{Binding Order.Product}"></ComboBox>
+            <HyperlinkButton Command="{Binding CreateConsumer}">Создать</HyperlinkButton>
+            <TextBlock>Стоимость</TextBlock>
+            <TextBox Text="{Binding Order.Cost}" Watermark="Стоимость"></TextBox>
+            <TextBlock>Ожидаемая дата выполнения</TextBlock>
+            <DatePicker SelectedDate="{Binding OrderEndDate}"></DatePicker>
+            <TextBox Height="100" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Описание"
+                     Text="{Binding Order.Description}">
+            </TextBox>
+            <TextBox Height="100" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Размеры"
+                     Text="{Binding Order.Sizes}">
+            </TextBox>
+            <TextBox Height="100" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Файлы (ссылки)"
+                     Text="{Binding Order.Schemas}">
+            </TextBox>
+            <TextBox Height="100" AcceptsReturn="True" TextWrapping="Wrap" Watermark="Файлы (ссылки)"
+                     Text="{Binding Order.Description}">
+            </TextBox>
+            <Button Command="{Binding Create}">Создать заказ</Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

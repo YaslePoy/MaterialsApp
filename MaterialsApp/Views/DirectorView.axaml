@@ -14,6 +14,7 @@
                 <StackPanel Spacing="10" Orientation="Horizontal">
                     <HyperlinkButton Command="{Binding ToItemsCommand}">Материалы и комплектующие</HyperlinkButton>
                     <HyperlinkButton Command="{Binding ToWorkshopsCommand}">Цеха</HyperlinkButton>
+                    <HyperlinkButton Command="{Binding ToOrdersCommand}">Заказы</HyperlinkButton>
                 </StackPanel>
             </ScrollViewer>
         </StackPanel>

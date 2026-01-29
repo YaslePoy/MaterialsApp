@@ -3,6 +3,7 @@ using System;
 using MaterialsApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MaterialsApp.Migrations
 {
     [DbContext(typeof(MaterialsContext))]
-    partial class MaterialsContextModelSnapshot : ModelSnapshot
+    [Migration("20260128143601_order_more_data")]
+    partial class order_more_data
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,35 +235,6 @@ namespace MaterialsApp.Migrations
                     b.ToTable("EquipmentTypes");
                 });
 
-            modelBuilder.Entity("MaterialsApp.Models.Failure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("EndTime")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("EquipmentId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("StartTime")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EquipmentId");
-
-                    b.ToTable("Failures");
-                });
-
             modelBuilder.Entity("MaterialsApp.Models.Material", b =>
                 {
                     b.Property<string>("Article")
@@ -418,6 +392,10 @@ namespace MaterialsApp.Migrations
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("Files")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int?>("ManagerId")
                         .HasColumnType("integer");
 
@@ -425,11 +403,10 @@ namespace MaterialsApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Schemas")
@@ -473,35 +450,6 @@ namespace MaterialsApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.ProductAssessment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("Decision")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Parameters")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("ProductAssessments");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.Role", b =>
@@ -744,17 +692,6 @@ namespace MaterialsApp.Migrations
                     b.Navigation("EquipmentTypeNavigation");
                 });
 
-            modelBuilder.Entity("MaterialsApp.Models.Failure", b =>
-                {
-                    b.HasOne("MaterialsApp.Models.Equipment", "Equipment")
-                        .WithMany()
-                        .HasForeignKey("EquipmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Equipment");
-                });
-
             modelBuilder.Entity("MaterialsApp.Models.Material", b =>
                 {
                     b.HasOne("MaterialsApp.Models.MaterialType", "MaterialType")
@@ -832,24 +769,15 @@ namespace MaterialsApp.Migrations
 
                     b.HasOne("MaterialsApp.Models.Product", "Product")
                         .WithMany("Orders")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Customer");
 
                     b.Navigation("Manager");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("MaterialsApp.Models.ProductAssessment", b =>
-                {
-                    b.HasOne("MaterialsApp.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.StatusChange", b =>

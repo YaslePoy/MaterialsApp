@@ -23,4 +23,6 @@ public partial class Product
     public virtual ICollection<OperationSpec> OperationSpecs { get; set; } = new ObservableCollection<OperationSpec>();
 
     public virtual ICollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
+    
+    public override string ToString() => Name;
 }

@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.QualityView"
+             x:DataType="viewModels:QualityViewModel">
+    <ScrollViewer Margin="10">
+        <StackPanel Spacing="10" MaxWidth="600">
+            <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+            <TextBox Watermark="Номер заказа" Text="{Binding ProductAssessment.Order.Number}"></TextBox>
+            <DataGrid Height="500" IsReadOnly="False" ItemsSource="{Binding QualityParameters}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="False" Header="Название параметра" Binding="{Binding Name}"></DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="False" Header="Величина" Binding="{Binding Value}"></DataGridTextColumn>
+                    <DataGridCheckBoxColumn IsReadOnly="False" Header="Удоволетворительно" Binding="{Binding IsOk}"></DataGridCheckBoxColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="viewModels:QualityParameter">
+                            <Button Command="{Binding #Box.((viewModels:QualityViewModel)DataContext).DeleteParam}" CommandParameter="{Binding}">Удалить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Command="{Binding NewParam}">Добавить параметр</Button>
+            <Button Command="{Binding CalculateQuality}">Расчитать качество</Button>
+            <CheckBox IsEnabled="False" IsChecked="{Binding ProductAssessment.Decision}" IsThreeState="False" Name="Box">Годен</CheckBox>
+            <TextBox Height="300" Text="{Binding ProductAssessment.Comment}" IsVisible="{Binding CanComment}"></TextBox>
+            <Button Command="{Binding SaveCommand}">Сохранить</Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

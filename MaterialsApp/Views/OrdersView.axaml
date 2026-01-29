@@ -1,0 +1,50 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.OrdersView"
+             x:DataType="viewModels:OrdersViewModel">
+    <Grid RowDefinitions="200 * 100" Margin="10">
+        <StackPanel>
+            <HyperlinkButton Command="{Binding NavigateBackCommand}" Margin="5">Назад</HyperlinkButton>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+            <HyperlinkButton Command="{Binding ShowAll}">Все</HyperlinkButton>
+            <HyperlinkButton Command="{Binding ShowNew}">Новые</HyperlinkButton>
+            <HyperlinkButton Command="{Binding ShowCompleted}">Выполненные</HyperlinkButton>
+            <HyperlinkButton Command="{Binding ShowCurrent}">Текущие</HyperlinkButton>
+            <HyperlinkButton Command="{Binding ShowCanceled}">Отмененные</HyperlinkButton>
+        </StackPanel>
+        </StackPanel>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Header="Фамилия" Binding="{Binding Date}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Возраст" Binding="{Binding Number}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding StatusName}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding Cost}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding Customer.Name}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding EndDate}"></DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" Header="Операции" Binding="{Binding Manager.Name}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Spacing="10" Orientation="Horizontal" Grid.Row="2">
+            <Button IsVisible="{Binding Visible1}" Command="{Binding Create}">Создать</Button>
+            <Button IsVisible="{Binding Visible2}" Command="{Binding SetupStatus}" CommandParameter="2"
+                    Background="OrangeRed">
+                Отменить
+            </Button>
+            <Button IsVisible="{Binding Visible9}" Command="{Binding SetupStatus}" CommandParameter="9"
+                    Background="OrangeRed">
+                Закрыть
+            </Button>
+            <Button IsVisible="{Binding Visible3}" Command="{Binding SetupStatus}" CommandParameter="3">Составить документацию</Button>
+            <Button IsVisible="{Binding Visible5}" Command="{Binding SetupStatus}" CommandParameter="5">Закупить</Button>
+            <Button IsVisible="{Binding Visible6}" Command="{Binding SetupStatus}" CommandParameter="6">Произвести</Button>
+            <Button IsVisible="{Binding Visible4}" Command="{Binding SetupStatus}" CommandParameter="4">Подтвердить</Button>
+            <Button IsVisible="{Binding Visible7}" Command="{Binding SetupStatus}" CommandParameter="7">Проконтролировать</Button>
+            <Button IsVisible="{Binding Visible8}" Command="{Binding SetupStatus}" CommandParameter="8">Готов</Button>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

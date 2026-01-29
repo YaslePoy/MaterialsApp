@@ -3,6 +3,7 @@ using System;
 using MaterialsApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MaterialsApp.Migrations
 {
     [DbContext(typeof(MaterialsContext))]
-    partial class MaterialsContextModelSnapshot : ModelSnapshot
+    [Migration("20260129130543_ProductAssessment")]
+    partial class ProductAssessment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,9 +428,8 @@ namespace MaterialsApp.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Number")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("integer");
@@ -490,16 +492,16 @@ namespace MaterialsApp.Migrations
                     b.Property<bool>("Decision")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Parameters")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductAssessments");
                 });
@@ -843,13 +845,13 @@ namespace MaterialsApp.Migrations
 
             modelBuilder.Entity("MaterialsApp.Models.ProductAssessment", b =>
                 {
-                    b.HasOne("MaterialsApp.Models.Order", "Order")
+                    b.HasOne("MaterialsApp.Models.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("OrderId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Order");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("MaterialsApp.Models.StatusChange", b =>

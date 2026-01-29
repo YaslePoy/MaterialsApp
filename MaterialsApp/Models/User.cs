@@ -26,4 +26,9 @@ public partial class User
     public virtual ICollection<Order> OrderCustomers { get; set; } = new ObservableCollection<Order>();
 
     public virtual ICollection<Order> OrderManagers { get; set; } = new ObservableCollection<Order>();
+
+    public override string ToString()
+    {
+        return $"{Name} {Surname} {Patronymic}";
+    }
 }

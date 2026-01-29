@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:MaterialsApp.Views"
+             xmlns:models="clr-namespace:MaterialsApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.FailureView"
+             x:DataType="views:FailureViewModel">
+    <Grid RowDefinitions="100 * 250" Name="BaseGrid" Margin="10">
+        <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Failures}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Оборудование" Binding="{Binding EquipmentId}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Время" Binding="{Binding StartTime}"></DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataTemplate x:DataType="models:Failure">
+                        <Button Command="{Binding #BaseGrid.((views:FailureViewModel)DataContext).Solve}" CommandParameter="{Binding}">Восстановить</Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" Spacing="10" MaxWidth="600">
+            <TextBlock>Регистрация сбоя оборудования</TextBlock>
+            <ComboBox ItemsSource="{Binding Equipments}" SelectedItem="{Binding NewFailure.Equipment}" PlaceholderText="Выберите оборудование"></ComboBox>
+            <TextBox Height="150" Watermark="Причина" Text="{Binding NewFailure.Reason}"></TextBox>
+            <Button Command="{Binding RegisterFailure}">Зарегистрировать</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -72,6 +72,7 @@ public class LoginViewModel : ViewModelBase, IRoutableViewModel
         {
             "Заказчик" => new CustomerViewModel(HostScreen),
             "Директор" => new DirectorViewModel(HostScreen),
+            "Мастер" => new MasterViewModel(HostScreen),
             _ => new RegisterViewModel(HostScreen)
         };
         
