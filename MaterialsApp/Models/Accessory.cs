@@ -33,6 +33,7 @@ public partial class Accessory
     public virtual Supplier Supplier { get; set; } = null!;
     public virtual AccessoryType AccessoryType { get; set; } = null!;
     public virtual Warehouse? Warehouse { get; set; } = null!;
+    public override string ToString() => Name;
     
 }
 

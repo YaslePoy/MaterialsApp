@@ -10,12 +10,12 @@
         <StackPanel>
             <HyperlinkButton Command="{Binding NavigateBackCommand}" Margin="5">Назад</HyperlinkButton>
             <StackPanel Orientation="Horizontal" Spacing="10">
-            <HyperlinkButton Command="{Binding ShowAll}">Все</HyperlinkButton>
-            <HyperlinkButton Command="{Binding ShowNew}">Новые</HyperlinkButton>
-            <HyperlinkButton Command="{Binding ShowCompleted}">Выполненные</HyperlinkButton>
-            <HyperlinkButton Command="{Binding ShowCurrent}">Текущие</HyperlinkButton>
-            <HyperlinkButton Command="{Binding ShowCanceled}">Отмененные</HyperlinkButton>
-        </StackPanel>
+                <HyperlinkButton Command="{Binding ShowAll}">Все</HyperlinkButton>
+                <HyperlinkButton Command="{Binding ShowNew}">Новые</HyperlinkButton>
+                <HyperlinkButton Command="{Binding ShowCompleted}">Выполненные</HyperlinkButton>
+                <HyperlinkButton Command="{Binding ShowCurrent}">Текущие</HyperlinkButton>
+                <HyperlinkButton Command="{Binding ShowCanceled}">Отмененные</HyperlinkButton>
+            </StackPanel>
         </StackPanel>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
             <DataGrid.Columns>
@@ -45,6 +45,6 @@
             <Button IsVisible="{Binding Visible7}" Command="{Binding SetupStatus}" CommandParameter="7">Проконтролировать</Button>
             <Button IsVisible="{Binding Visible8}" Command="{Binding SetupStatus}" CommandParameter="8">Готов</Button>
         </StackPanel>
-        
+
     </Grid>
 </UserControl>

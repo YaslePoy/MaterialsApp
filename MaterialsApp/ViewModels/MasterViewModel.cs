@@ -19,4 +19,5 @@ public class MasterViewModel : ViewModelBase, IRoutableViewModel, IScreen
     public IScreen HostScreen { get; }
     public ICommand ToOrders => ReactiveCommand.Create(() => Router.Navigate.Execute(new OrdersViewModel(this)));
     public ICommand ToOEq => ReactiveCommand.Create(() => Router.Navigate.Execute(new FailureViewModel(this)));
+    public ICommand ToProds => ReactiveCommand.Create(() => Router.Navigate.Execute(new ProductsViewModel(this)));
 }

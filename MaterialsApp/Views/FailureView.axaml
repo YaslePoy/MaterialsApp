@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:MaterialsApp.Views"
              xmlns:models="clr-namespace:MaterialsApp.Models"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="MaterialsApp.Views.FailureView"
-             x:DataType="views:FailureViewModel">
+             x:DataType="viewModels:FailureViewModel">
     <Grid RowDefinitions="100 * 250" Name="BaseGrid" Margin="10">
         <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
         <DataGrid Grid.Row="1" ItemsSource="{Binding Failures}">
@@ -15,7 +16,7 @@
                 <DataGridTextColumn Header="Время" Binding="{Binding StartTime}"></DataGridTextColumn>
                 <DataGridTemplateColumn>
                     <DataTemplate x:DataType="models:Failure">
-                        <Button Command="{Binding #BaseGrid.((views:FailureViewModel)DataContext).Solve}" CommandParameter="{Binding}">Восстановить</Button>
+                        <Button Command="{Binding #BaseGrid.((viewModels:FailureViewModel)DataContext).Solve}" CommandParameter="{Binding}">Восстановить</Button>
                     </DataTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>

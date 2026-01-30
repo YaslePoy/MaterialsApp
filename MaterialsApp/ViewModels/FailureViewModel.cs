@@ -4,12 +4,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DynamicData;
 using MaterialsApp.Models;
-using MaterialsApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using MsBox.Avalonia;
 using ReactiveUI;
 
-namespace MaterialsApp.Views;
+namespace MaterialsApp.ViewModels;
 
 public class FailureViewModel : ViewModelBase, IRoutableViewModel
 {

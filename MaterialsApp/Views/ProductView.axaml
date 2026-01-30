@@ -1,0 +1,130 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:MaterialsApp.ViewModels"
+             xmlns:models="clr-namespace:MaterialsApp.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MaterialsApp.Views.ProductView"
+             x:DataType="viewModels:ProductViewModel">
+    <UserControl.Styles>
+        <Style Selector="DataGrid">
+            <Setter Property="Height" Value="300"></Setter>
+        </Style>
+    </UserControl.Styles>
+    <ScrollViewer Margin="10">
+        <StackPanel Spacing="10" MaxWidth="600">
+            <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
+            <TextBox Watermark="Название" Text="{Binding Inner.Name}"></TextBox>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <ComboBox PlaceholderText="Выберите комплектующее" ItemsSource="{Binding Accessories}"
+                          Name="AccSelector">
+                </ComboBox>
+                <Button Command="{Binding AddNew}" CommandParameter="{Binding #AccSelector.SelectedItem}">Добавить</Button>
+            </StackPanel>
+            <DataGrid Width="500" IsReadOnly="False" ItemsSource="{Binding AccessoriesSpecs}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Комплектующее" Binding="{Binding Accessories.Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Count}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="models:AccessoriesSpec">
+                            <Button Background="OrangeRed"
+                                    Command="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).RemoveNew}"
+                                    CommandParameter="{Binding}">
+                                Удалить
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <ComboBox PlaceholderText="Выберите материал" ItemsSource="{Binding Materials}" Name="MatSelector"></ComboBox>
+                <Button Command="{Binding AddNew}" CommandParameter="{Binding #MatSelector.SelectedItem}">Добавить</Button>
+            </StackPanel>
+            <DataGrid Width="500" IsReadOnly="False" ItemsSource="{Binding MaterialSpecs}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Материал" Binding="{Binding Material.Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Count}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="models:MaterialSpec">
+                            <Button Background="OrangeRed"
+                                    Command="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).RemoveNew}"
+                                    CommandParameter="{Binding}">
+                                Удалить
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <ComboBox PlaceholderText="Выберите изделие" ItemsSource="{Binding Products}" Name="ProdSelector"></ComboBox>
+                <Button Command="{Binding AddNew}" CommandParameter="{Binding #ProdSelector.SelectedItem}">Добавить</Button>
+            </StackPanel>
+            <DataGrid Width="500" IsReadOnly="False" ItemsSource="{Binding AssemblySpecs}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Изделие" Binding="{Binding Item.Name}" IsReadOnly="True"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Count}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="models:AssemblySpec">
+                            <Button Background="OrangeRed"
+                                    Command="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).RemoveNew}"
+                                    CommandParameter="{Binding}">
+                                Удалить
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Command="{Binding AddNew}">
+                <Button.Content>Добавить операцию</Button.Content>
+                <Button.CommandParameter>
+                    <models:OperationSpec></models:OperationSpec>
+                </Button.CommandParameter>
+            </Button>
+            <DataGrid Width="500" IsReadOnly="False" ItemsSource="{Binding Operations}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Operation}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Время" Binding="{Binding OperationTime}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Number}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="models:OperationSpec">
+                            <ComboBox ItemsSource="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).Equipments}" SelectedItem="{Binding EquipmentTypeNavigation}"></ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="models:OperationSpec">
+                            <Button Background="OrangeRed"
+                                    Command="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).RemoveNew}"
+                                    CommandParameter="{Binding}">
+                                Удалить
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Command="{Binding AddNew}">
+                <Button.Content>Добавить размер</Button.Content>
+                <Button.CommandParameter>
+                    <viewModels:ProductSize></viewModels:ProductSize>
+                </Button.CommandParameter>
+            </Button>
+            <DataGrid Width="500" IsReadOnly="False" ItemsSource="{Binding ProductSizes}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Name}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Величина" Binding="{Binding Value}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Еденица измерения" Binding="{Binding Unit}" IsReadOnly="False"></DataGridTextColumn>
+                    <DataGridTemplateColumn>
+                        <DataTemplate x:DataType="viewModels:ProductSize">
+                            <Button Background="OrangeRed"
+                                    Command="{Binding #AccSelector.((viewModels:ProductViewModel)DataContext).RemoveNew}"
+                                    CommandParameter="{Binding}">
+                                Удалить
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Command="{Binding SaveCommand}">Сохранить</Button>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

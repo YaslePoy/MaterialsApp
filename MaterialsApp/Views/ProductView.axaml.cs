@@ -6,9 +6,9 @@ using ReactiveUI.Avalonia;
 
 namespace MaterialsApp.Views;
 
-public partial class FailureView : ReactiveUserControl<FailureViewModel>
+public partial class ProductView : ReactiveUserControl<ProductViewModel>
 {
-    public FailureView()
+    public ProductView()
     {
         InitializeComponent();
     }

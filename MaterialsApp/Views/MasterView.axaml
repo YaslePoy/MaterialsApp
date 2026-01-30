@@ -12,6 +12,7 @@
         <StackPanel Margin="10" Spacing="10">
             <HyperlinkButton Command="{Binding ToOrders}">Заказы</HyperlinkButton>
             <HyperlinkButton Command="{Binding ToOEq}">Оборудование</HyperlinkButton>
+            <HyperlinkButton Command="{Binding ToProds}">Изделия</HyperlinkButton>
         </StackPanel>
         <rui:RoutedViewHost Grid.Column="1" Margin="10" Router="{Binding Router}">
             <rui:RoutedViewHost.ViewLocator>

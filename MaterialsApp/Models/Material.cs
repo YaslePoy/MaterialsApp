@@ -20,8 +20,7 @@ public partial class Material
 
     public byte[]? Image { get; set; }
 
-    [ForeignKey(nameof(MaterialType))]
-    public int MaterialTypeId { get; set; }
+    [ForeignKey(nameof(MaterialType))] public int MaterialTypeId { get; set; }
 
     public decimal? Price { get; set; }
 
@@ -32,19 +31,18 @@ public partial class Material
     public string? Characteristics { get; set; }
 
     public double? MassPerMeter { get; set; }
-    [ForeignKey(nameof(Warehouse))]
-    public int? WarehouseId { get; set; }
+    [ForeignKey(nameof(Warehouse))] public int? WarehouseId { get; set; }
     public virtual ICollection<MaterialSpec> MaterialSpecs { get; set; } = new ObservableCollection<MaterialSpec>();
 
     public virtual Supplier Supplier { get; set; } = null!;
     public virtual MaterialType MaterialType { get; set; } = null!;
     public virtual Warehouse? Warehouse { get; set; } = null!;
+    public override string ToString() => Name;
 }
 
 public class MaterialType
 {
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
     public string Name { get; set; }
 
     public override string ToString() => Name;
@@ -70,8 +68,7 @@ public class Warehouse
         return Id;
     }
 
-    [Key]
-    public int Id { get; set; }
+    [Key] public int Id { get; set; }
     public string Name { get; set; }
 
     public override string ToString()

@@ -10,7 +10,7 @@
         <StackPanel Spacing="10" MaxWidth="600">
             <HyperlinkButton Command="{Binding NavigateBackCommand}">Назад</HyperlinkButton>
             <TextBox Watermark="Номер заказа" Text="{Binding ProductAssessment.Order.Number}"></TextBox>
-            <DataGrid Height="500" IsReadOnly="False" ItemsSource="{Binding QualityParameters}">
+            <DataGrid Height="400" IsReadOnly="False" ItemsSource="{Binding QualityParameters}">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="False" Header="Название параметра" Binding="{Binding Name}"></DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="False" Header="Величина" Binding="{Binding Value}"></DataGridTextColumn>

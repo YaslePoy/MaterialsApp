@@ -11,4 +11,5 @@ public partial class EquipmentType
     public virtual ICollection<Equipment> Equipment { get; set; } = new ObservableCollection<Equipment>();
 
     public virtual ICollection<OperationSpec> OperationSpecs { get; set; } = new ObservableCollection<OperationSpec>();
+    public override string ToString() => Name;
 }
