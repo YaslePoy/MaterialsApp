@@ -12,7 +12,7 @@ namespace MaterialsApp.ViewModels;
 public class ProductsViewModel : ViewModelBase, IRoutableViewModel
 {
     private MaterialsContext _db = new();
-
+    private bool _refreshing;
     public ProductsViewModel(IScreen hostScreen)
     {
         HostScreen = hostScreen;
@@ -22,6 +22,7 @@ public class ProductsViewModel : ViewModelBase, IRoutableViewModel
 
     private async Task LoadAsync()
     {
+        Products.Clear();
         Products.AddRange(await _db.Products.ToListAsync());
     }
 
@@ -44,4 +45,16 @@ public class ProductsViewModel : ViewModelBase, IRoutableViewModel
 
     public string? UrlPathSegment { get; } = Guid.NewGuid().ToString();
     public IScreen HostScreen { get; }
+    
+    public async Task RefreshAsync()
+    {
+        if (!_refreshing)
+        {
+            _refreshing = true;
+            return;
+        }
+
+        _db = new MaterialsContext();
+        await LoadAsync();
+    }
 }
